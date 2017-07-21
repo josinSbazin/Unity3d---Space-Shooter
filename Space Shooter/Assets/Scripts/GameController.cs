@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -11,9 +12,9 @@ public class GameController : MonoBehaviour {
     public float startWait;
     public float waveWait;
 
-    public GUIText scoreText;
-    public GUIText restartText;
-    public GUIText gameOverText;
+    public Text scoreText;
+    public Text gameOverText;
+    public GameObject restartButtom;
 
     private bool gameOver;
     private bool restart;
@@ -24,23 +25,24 @@ public class GameController : MonoBehaviour {
     {
         gameOver = false;
         restart = false;
-        restartText.text = "";
+        //        restartText.text = "";
         gameOverText.text = "";
+        restartButtom.SetActive(false);
         score = 0;
         UpdateScore();
         StartCoroutine(SpawnWaves());
     }
 
-    private void Update()
-    {
-        if (restart)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Application.LoadLevel(Application.loadedLevel);
-            }
-        }
-    }
+//    private void Update()
+//    {
+//        if (restart)
+//        {
+//            if (Input.GetKeyDown(KeyCode.R))
+//            {
+//                Application.LoadLevel(Application.loadedLevel);
+//            }
+//        }
+//    }
 
     IEnumerator SpawnWaves()
     {
@@ -59,7 +61,8 @@ public class GameController : MonoBehaviour {
 
             if (gameOver)
             {
-                restartText.text = "Press 'R' for Restart";
+                //                restartText.text = "Press 'R' for Restart";
+                restartButtom.SetActive(true);
                 restart = true;
                 break;
             }
@@ -81,6 +84,11 @@ public class GameController : MonoBehaviour {
     {
         gameOverText.text = "Game Over";
         gameOver = true;
+    }
+
+    public void RestartGame()
+    {
+        Application.LoadLevel(Application.loadedLevel);
     }
 	
 }
